@@ -28,39 +28,10 @@ public class ComparisionApp extends AppCompatActivity {
      */
     private GoogleApiClient client;
     private int countx =0, county =0;
-    //resultField input
+
     EditText resultField;
     SharedPreferences prefs;
 
-
-    /*
-    private boolean continueIncrementing;
-    private Runnable incrementerThread;
-
-
-    void setIsIncrementing(boolean newSetting){
-        continueIncrementing = newSetting;
-    }
-
-    private boolean isIncrementing(){
-        return continueIncrementing;
-    }
-
-    private void startIncrementing(){
-        setIsIncrementing(true);
-        new Thread(new Runnable() {
-            public void run() {
-                while(isIncrementing()){
-                    countx = countx + 1;
-                }
-            }
-        }).start();
-    }
-
-    private void stopIncrementing(){
-        setIsIncrementing(false);
-    }
-    */
     private void updateResultField(){
         String compSymbol;
         if ( countx > county)
@@ -108,7 +79,6 @@ public class ComparisionApp extends AppCompatActivity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        //xFieldDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
         xFieldDetails.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         xFieldDetails.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         xFieldDetails.addRule(RelativeLayout.BELOW, nameField.getId());
@@ -116,12 +86,7 @@ public class ComparisionApp extends AppCompatActivity {
         xField.setBackgroundColor(Color.parseColor("#FF3F80"));
         xField.setGravity(Gravity.CENTER);
         xField.setTextColor(Color.WHITE);
-        xField.setText(String.valueOf(countx));
-
-        Resources r = getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200,
-                r.getDisplayMetrics());
-        //xField.setWidth(px);
+        xField.setText("X = " + String.valueOf(countx));
 
         //yField input
         final EditText yField = new EditText(this);
@@ -136,12 +101,12 @@ public class ComparisionApp extends AppCompatActivity {
         yField.setBackgroundColor(Color.parseColor("#FF3F80"));
         yField.setGravity(Gravity.CENTER);
         yField.setTextColor(Color.WHITE);
-        yField.setText(String.valueOf(county));
+        yField.setText("Y = " + String.valueOf(county));
         yFieldDetails.setMargins(0, 100, 0, 50);
 
         //Button
         Button xUpButton = new Button(this);
-        xUpButton.setText("UP");
+        xUpButton.setText("+");
         xUpButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams xUpButtonDetails = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -161,7 +126,7 @@ public class ComparisionApp extends AppCompatActivity {
 
 
         Button xDownButton = new Button(this);
-        xDownButton.setText("Down");
+        xDownButton.setText("-");
         xDownButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams xDownButtonDetails = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -181,7 +146,7 @@ public class ComparisionApp extends AppCompatActivity {
 
 
         Button yUpButton = new Button(this);
-        yUpButton.setText("UP");
+        yUpButton.setText("+");
         yUpButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams yUpButtonDetails = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -201,7 +166,7 @@ public class ComparisionApp extends AppCompatActivity {
 
 
         Button yDownButton = new Button(this);
-        yDownButton.setText("Down");
+        yDownButton.setText("-");
         yDownButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams yDownButtonDetails = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -237,37 +202,6 @@ public class ComparisionApp extends AppCompatActivity {
         resultField.setTextColor(Color.WHITE);
         updateResultField();
 
-        /*
-        //put this OnTouchListener on your button
-        xUpButton.setOnTouchListener( new View.OnTouchListener(){
-            public boolean onTouch(View v, MotionEvent event){
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    startIncrementing();
-                    return true;
-                }
-                else if(event.getAction() == MotionEvent.ACTION_UP){
-                    stopIncrementing();
-                    return true;
-                }
-                return false;
-            }
-        });
-        */
-
-
-        xUpButton.setOnLongClickListener(
-                new Button.OnLongClickListener() {
-                    public boolean onLongClick(View v) {
-                        countx = countx + 20;
-                        xField.setText(countx);
-                        return true;
-                    }
-                }
-        );
-
-
-
-        //Add widge to layout (making button child of layout
         myLayout.addView(xUpButton, xUpButtonDetails);
         myLayout.addView(xDownButton, xDownButtonDetails);
         myLayout.addView(yUpButton, yUpButtonDetails);
@@ -277,22 +211,9 @@ public class ComparisionApp extends AppCompatActivity {
         myLayout.addView(yField, yFieldDetails);
         myLayout.addView(resultField, resultFieldDetails);
 
-        //set myactivity as display/content to this view
-        setContentView(myLayout);
-        //setContentView(R.layout.activity_comparision_app);
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+        setContentView(myLayout);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
